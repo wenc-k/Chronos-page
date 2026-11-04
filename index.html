@@ -1,0 +1,422 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Chronos: Sequential Identity-Preserving Video Generation by Temporal Anchoring</title>
+  <meta name="description" content="Chronos is a training-free framework for identity-preserving video generation that unifies single-segment facial identity preservation and multi-segment sequential action generation through temporal anchoring. 1st place in both tracks of the ACM MM 2026 IPVG Challenge.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Chronos: Sequential Identity-Preserving Video Generation by Temporal Anchoring">
+  <meta property="og:description" content="Training-free temporal anchoring for identity-preserving video generation. 1st place in Track 1 and Track 2 of the ACM MM 2026 IPVG Challenge.">
+  <meta property="og:image" content="assets/img/teaser.webp">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<a class="skip" href="#abstract">Skip to content</a>
+
+<header class="nav" id="top">
+  <div class="nav-inner">
+    <a class="wordmark" href="#top" aria-label="Chronos, back to top">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12h20" /><path d="M7 7l5 5-5 5-5-5z" class="d" /><path d="M17 9l3 3-3 3-3-3z" class="d2" /></svg>
+      <span>Chronos</span>
+    </a>
+    <nav aria-label="Sections">
+      <a href="#abstract">Abstract</a>
+      <a href="#showcase">Showcase</a>
+      <a href="#method">Method</a>
+      <a href="#results">Results</a>
+      <a href="#poster">Poster</a>
+      <a href="#citation">BibTeX</a>
+    </nav>
+  </div>
+  <div class="scrub" aria-hidden="true"><span class="scrub-fill"></span><span class="scrub-ticks"></span></div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="wrap">
+    <p class="eyebrow mono">ACM Multimedia 2026 <span class="sep">/</span> Rio de Janeiro</p>
+    <p class="award"><span class="award-dot" aria-hidden="true"></span>1st place in Track&nbsp;1 &amp; Track&nbsp;2 · ACM MM 2026 Identity-Preserving Video Generation Challenge</p>
+
+    <h1 class="title">
+      <span class="title-word">Chronos</span>
+      <span class="title-sub">Sequential Identity-Preserving Video Generation by Temporal Anchoring</span>
+    </h1>
+
+    <p class="authors">
+      <span>Mengqi Huang<sup>1*</sup></span>
+      <span>Wenchuan Wang<sup>1*</sup></span>
+      <span>Zhendong Mao<sup>1†</sup></span>
+      <span>Yijing Tu<sup>1</sup></span>
+      <span>Zhike Liu<sup>1</sup></span>
+      <span>Luoni Wang<sup>1</sup></span>
+      <span>Ning Tong<sup>2</sup></span>
+      <span>Xiaoxiao Sheng<sup>3</sup></span>
+      <span>Tianyu Huang<sup>3</sup></span>
+      <span>Xuecheng Qi<sup>4</sup></span>
+      <span>Yongdong Zhang<sup>1</sup></span>
+    </p>
+    <p class="affils">
+      <span><sup>1</sup>University of Science and Technology of China</span>
+      <span><sup>2</sup>South China University of Technology</span>
+      <span><sup>3</sup>Huawei Inc.</span>
+      <span><sup>4</sup>Independent Researcher</span>
+    </p>
+    <p class="notes mono">* Equal contribution &nbsp;·&nbsp; † Corresponding author</p>
+
+    <div class="links">
+      <!-- To enable: put the arXiv URL in href, e.g. href="https://arxiv.org/abs/XXXX.XXXXX" -->
+      <a class="btn" data-pending="Soon" href="">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/><path d="M9 12h6M9 16h6"/></svg>
+        <span>arXiv</span>
+      </a>
+      <!-- To enable: put the repository URL in href -->
+      <a class="btn" data-pending="Coming soon" href="">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 8l-4 4 4 4M16 8l4 4-4 4M13.5 5l-3 14"/></svg>
+        <span>Code</span>
+      </a>
+      <a class="btn" href="assets/chronos_poster.pdf" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="1.5"/><path d="M8 7h8M8 11h8M8 15h4"/></svg>
+        <span>Poster</span>
+      </a>
+      <a class="btn" href="https://hidream-ai.github.io/ipvg-challenge-2026.github.io" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 4h8v5a4 4 0 0 1-8 0z"/><path d="M8 6H5a3 3 0 0 0 3 4M16 6h3a3 3 0 0 1-3 4M12 13v4M8.5 20h7"/></svg>
+        <span>Challenge</span><span class="ext" aria-hidden="true">↗</span>
+      </a>
+      <a class="btn btn-ghost" href="#citation">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h4v4H8a3 3 0 0 0 0 0v3M14 7h4v4h-3v3"/></svg>
+        <span>BibTeX</span>
+      </a>
+    </div>
+
+    <!-- Temporal anchoring explorer -->
+    <div class="explorer" id="explorer">
+      <div class="ex-head">
+        <p class="ex-label mono">Temporal anchoring, one clip at a time</p>
+        <div class="ex-tabs" role="tablist" aria-label="Examples"></div>
+      </div>
+      <div class="ex-body">
+        <figure class="ex-refs">
+          <figcaption class="mono">Reference</figcaption>
+          <div class="ex-ref-imgs"></div>
+        </figure>
+        <div class="ex-main">
+          <p class="ex-prompt"></p>
+          <div class="ex-frames"></div>
+          <div class="ex-track" role="slider" tabindex="0" aria-label="Playhead, seconds" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0">
+            <div class="ex-segs"></div>
+            <div class="ex-head-line"><span class="ex-time mono">0.0 s</span></div>
+            <div class="ex-ticks mono"></div>
+          </div>
+          <ol class="ex-caps"></ol>
+          <p class="ex-meta mono"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<main>
+
+<!-- ============ TEASER ============ -->
+<section class="sec" id="teaser">
+  <div class="wrap">
+    <figure class="fig">
+      <button class="zoom" type="button" aria-label="Enlarge figure">
+        <img src="assets/img/teaser.webp" width="2400" height="1208" alt="Reference images and generated frames from Chronos. Top: a woman spray-painting graffiti in a bookshop (Track 1). Middle: an elderly couple reacting to a laptop across three timed actions. Bottom: a black-and-white cat sitting, licking its paw, then looking around, next to a gray cat (Track 2).">
+      </button>
+      <figcaption>
+        <b>Generated results of Chronos.</b> Given reference images, a raw prompt and optional temporal captions, Chronos generates text-aligned, high-quality videos with high identity fidelity, for a single face (Track 1) and for multiple subjects through sequential actions (Track 2). Red text marks key elements of the long instructions.
+      </figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ============ ABSTRACT ============ -->
+<section class="sec" id="abstract">
+  <div class="wrap narrow">
+    <h2 class="kicker"><span class="tc mono">01</span>Abstract</h2>
+    <p class="lead">Holding on to <em>who</em> is in the video gets harder the more the video has to <em>move</em>. Chronos treats identity preservation as a temporal problem and places an anchor on every action segment.</p>
+    <p>Identity-preserving video generation aims to synthesize high-quality and visually realistic videos from textual and visual conditions while faithfully maintaining the subject's identity across diverse motions. Prior methods have extensively introduced reference-guided control signals and identity-aware conditioning to improve facial alignment from reference images. However, improving static identity alignment alone creates a fundamental tension between identity fidelity and temporal controllability, which frequently causes identity drift or motion suppression under large pose variations and multi-segment sequential actions.</p>
+    <p>To address this, we propose <b>Chronos</b>, a framework that unifies single-segment facial identity preservation and multi-segment sequential action generation under a common temporal formulation. Specifically, Chronos integrates <b>Semantic Prompt Anchoring</b> to adaptively refine the user prompt, <b>Visual Frame Anchoring</b> to transform conditions into visually grounded keyframe anchors for visual guidance, and <b>Metric-Guided Candidate Routing</b> to select the highest-quality videos from heterogeneous generators via multi-dimensional evaluation. Extensive evaluations demonstrate the superiority of our approach, which <b>achieved first place in both Track 1 and Track 2 of the ACM MM 2026 Identity-Preserving Video Generation Challenge</b>, demonstrating its effectiveness across both facial identity preservation and sequential action generation settings.</p>
+  </div>
+</section>
+
+<!-- ============ SHOWCASE ============ -->
+<section class="sec" id="showcase">
+  <div class="wrap">
+    <h2 class="kicker"><span class="tc mono">02</span>Showcase</h2>
+    <div class="block-head">
+      <p class="sub">Videos generated by Chronos on the challenge test sets. Each clip is about 5 seconds.</p>
+      <div class="seg" role="tablist" aria-label="Track" data-tabs-for="gallery">
+        <button role="tab" aria-selected="true" data-tab="t1">Track 1 · Facial ID</button>
+        <button role="tab" aria-selected="false" data-tab="t2">Track 2 · Sequential actions</button>
+      </div>
+    </div>
+    <!-- Each .vid: data-src = video file, data-poster = first frame. Add a <p class="vid-cap"> to show the prompt. -->
+    <div class="gallery" data-panel="t1">
+      <figure class="vid" data-src="assets/videos/t1_19.mp4" data-poster="assets/videos/t1_19.webp"><figcaption class="mono">Track 1 · #19</figcaption></figure>
+      <figure class="vid" data-src="assets/videos/t1_194.mp4" data-poster="assets/videos/t1_194.webp"><figcaption class="mono">Track 1 · #194</figcaption></figure>
+      <figure class="vid" data-src="assets/videos/t1_3.mp4" data-poster="assets/videos/t1_3.webp"><figcaption class="mono">Track 1 · #3</figcaption></figure>
+      <figure class="vid" data-src="assets/videos/t1_70.mp4" data-poster="assets/videos/t1_70.webp"><figcaption class="mono">Track 1 · #70</figcaption></figure>
+    </div>
+    <div class="gallery" data-panel="t2" hidden>
+      <figure class="vid" data-src="assets/videos/t2_160.mp4" data-poster="assets/videos/t2_160.webp"><figcaption class="mono">Track 2 · #160</figcaption></figure>
+      <figure class="vid" data-src="assets/videos/t2_183.mp4" data-poster="assets/videos/t2_183.webp"><figcaption class="mono">Track 2 · #183</figcaption></figure>
+      <figure class="vid" data-src="assets/videos/t2_42.mp4" data-poster="assets/videos/t2_42.webp"><figcaption class="mono">Track 2 · #42</figcaption></figure>
+      <figure class="vid" data-src="assets/videos/t2_45.mp4" data-poster="assets/videos/t2_45.webp"><figcaption class="mono">Track 2 · #45</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<!-- ============ METHOD ============ -->
+<section class="sec" id="method">
+  <div class="wrap">
+    <h2 class="kicker"><span class="tc mono">03</span>Method</h2>
+    <div class="split">
+      <h3 class="h-display">One temporal formulation for both tracks.</h3>
+      <div>
+        <p>Given reference images <i>𝓘</i>, a raw prompt <i>P</i> and optional temporal captions <i>𝓒</i> = {<i>c</i><sub><i>t</i></sub>}<sub><i>t</i>=1</sub><sup><i>T</i></sup>, Chronos generates a video that keeps the target identity while following the scene, the actions and their order.</p>
+        <div class="tt">
+          <div class="tt-row"><span class="tt-k mono">T = 1</span><span class="tt-bar"><i style="width:100%"></i></span><span class="tt-v">Track 1 · facial identity preservation, a single segment</span></div>
+          <div class="tt-row"><span class="tt-k mono">T &gt; 1</span><span class="tt-bar"><i style="width:38%"></i><i style="width:26%"></i><i style="width:36%"></i></span><span class="tt-v">Track 2 · sequential actions, one anchor per segment</span></div>
+        </div>
+      </div>
+    </div>
+
+    <figure class="fig">
+      <button class="zoom" type="button" aria-label="Enlarge figure">
+        <img src="assets/img/pipeline.webp" width="2800" height="1164" loading="lazy" alt="Chronos pipeline. Inputs (reference images, raw prompt, temporal captions) flow into Semantic Prompt Anchoring (identity cue extraction and risk-aware prompt adaptation with levels light, medium, high), then Visual Frame Anchoring (cascaded keyframe anchors A1 to AT), then Metric-Guided Candidate Routing (several video generators, an automatic evaluator, weighted aggregation and exception-aware review).">
+      </button>
+      <figcaption><b>Overview of Chronos.</b> Semantic Prompt Anchoring refines the prompt with reliable identity cues, Visual Frame Anchoring turns conditions into keyframe anchors, and Metric-Guided Candidate Routing picks the best video from a pool of heterogeneous generators.</figcaption>
+    </figure>
+
+    <ol class="modules">
+      <li class="mod">
+        <p class="mod-n mono">Stage 1 · SPA</p>
+        <h3>Semantic Prompt Anchoring</h3>
+        <p>A non-intrusive prompt refinement that strengthens identity constraints while keeping the original scene, style and motion.</p>
+        <ul>
+          <li><b>Identity cue extraction.</b> A GPT model reads the reference images and keeps only stable, invariant identity cues <i>H</i>, dropping transient attributes such as clothing and background.</li>
+          <li><b>Risk-aware prompt adaptation.</b> It estimates the identity-drift risk of the prompt as a score <i>s</i> ∈ {1, 2, 3} and adds concise viewpoint and visibility cues to produce <i>P̂</i>.</li>
+        </ul>
+        <div class="risk" aria-label="Risk levels">
+          <span class="r r1"><b class="mono">1</b> Light · minimal correction</span>
+          <span class="r r2"><b class="mono">2</b> Medium · identity-aware adjustment</span>
+          <span class="r r3"><b class="mono">3</b> High · strong identity protection</span>
+        </div>
+      </li>
+      <li class="mod">
+        <p class="mod-n mono">Stage 2 · VFA</p>
+        <h3>Visual Frame Anchoring</h3>
+        <p>Text alone is ambiguous when the target pose, action or viewpoint departs from the reference. VFA uses an image-to-image operator <i>Φ</i><sub>I2I</sub> to turn <i>𝓘</i>, <i>P̂</i> and an instruction template into visually grounded keyframes.</p>
+        <ul>
+          <li><b>Track 1.</b> A single high-fidelity first-frame anchor <i>A</i><sub>1</sub> initializes image-to-video generation.</li>
+          <li><b>Track 2.</b> Anchor <i>A</i><sub>1</sub> comes from the first caption <i>c</i><sub>1</sub>; each later anchor <i>A</i><sub><i>t</i></sub> is generated from <i>c</i><sub><i>t</i></sub> and the previous keyframes, in a cascade.</li>
+        </ul>
+        <div class="cascade" aria-hidden="true">
+          <span>A<sub>1</sub></span><i></i><span>A<sub>2</sub></span><i></i><span>⋯</span><i></i><span>A<sub>T</sub></span>
+        </div>
+      </li>
+      <li class="mod">
+        <p class="mod-n mono">Stage 3 · MGCR</p>
+        <h3>Metric-Guided Candidate Routing</h3>
+        <p>Generators <i>G</i><sub>1</sub>…<i>G</i><sub><i>K</i></sub> each turn (<i>P̂</i>, <i>𝓐</i>) into a candidate video. An automatic evaluator scores every candidate on text consistency, identity, subject preservation, motion, visual quality and an LLM-based holistic judgment.</p>
+        <div class="eq">
+          <p><i>R</i>(<i>V<sub>k</sub></i>) = Σ<sub><i>j</i></sub> <i>λ<sub>j</sub></i> <i>s<sub>j</sub></i>(<i>V<sub>k</sub></i>)</p>
+          <p><i>V</i><sup>*</sup> = arg max<sub><i>V<sub>k</sub></i> ∈ 𝓥</sub> <i>R</i>(<i>V<sub>k</sub></i>)</p>
+        </div>
+        <ul>
+          <li><b>Exception-aware review.</b> If the winner falls below a threshold <i>τ<sub>j</sub></i> on any critical metric, it goes to human review instead of being accepted on its total score alone.</li>
+        </ul>
+      </li>
+    </ol>
+    <p class="aside">Chronos is <b>training-free</b>: no model is fine-tuned. The generator pool uses Wan2.2 I2V-14B for both tracks, plus Seedance for Track 1 and Wan FLF2V for Track 2; SPA and VFA use GPT-based models.</p>
+  </div>
+</section>
+
+<!-- ============ RESULTS ============ -->
+<section class="sec" id="results">
+  <div class="wrap">
+    <h2 class="kicker"><span class="tc mono">04</span>Results</h2>
+
+    <div class="kpis">
+      <div class="kpi">
+        <p class="kpi-k mono">Track 1 · Challenge</p>
+        <p class="kpi-v">1st</p>
+        <p class="kpi-d">Facial identity preservation, tied for first (final score 2.5)</p>
+      </div>
+      <div class="kpi">
+        <p class="kpi-k mono">Track 2 · Challenge</p>
+        <p class="kpi-v">1st</p>
+        <p class="kpi-d">Sequential-action identity preservation (final score 1.25)</p>
+      </div>
+      <div class="kpi">
+        <p class="kpi-k mono">Track 1 · Total Score</p>
+        <p class="kpi-v">0.6769</p>
+        <p class="kpi-d">About 9% above the runner-up, RefAlign (0.6214)</p>
+      </div>
+      <div class="kpi">
+        <p class="kpi-k mono">Track 2 · Total Score</p>
+        <p class="kpi-v">0.6102</p>
+        <p class="kpi-d">6.6% above the runner-up, Phantom (0.5725)</p>
+      </div>
+    </div>
+
+    <!-- Leaderboard -->
+    <div class="block">
+      <h3 class="h-block">Challenge leaderboard <span class="muted">· top three teams</span></h3>
+      <div class="lb">
+        <div class="table-wrap">
+          <table class="tbl">
+            <caption>Track 1 · Facial Identity-Preserving</caption>
+            <thead><tr><th>Team</th><th class="num">Final Score ↓</th><th class="num">Rank</th></tr></thead>
+            <tbody>
+              <tr class="ours"><td>USTC-CMI (Chronos)</td><td class="num">2.5</td><td class="num">1</td></tr>
+              <tr><td>MIPL_Video</td><td class="num">2.5</td><td class="num">1</td></tr>
+              <tr><td>xuanyuan_fuxi</td><td class="num">3</td><td class="num">3</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="table-wrap">
+          <table class="tbl">
+            <caption>Track 2 · Sequential Action Identity-Preserving</caption>
+            <thead><tr><th>Team</th><th class="num">Final Score ↓</th><th class="num">Rank</th></tr></thead>
+            <tbody>
+              <tr class="ours"><td>USTC-CMI (Chronos)</td><td class="num">1.25</td><td class="num">1</td></tr>
+              <tr><td>WislabGDUT</td><td class="num">1.8125</td><td class="num">2</td></tr>
+              <tr><td>USTC-AC</td><td class="num">2.9375</td><td class="num">3</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Comparison -->
+    <div class="block" data-tabs="cmp">
+      <div class="block-head">
+        <h3 class="h-block">Comparison with existing methods</h3>
+        <div class="seg" role="tablist" aria-label="Track">
+          <button role="tab" aria-selected="true" data-tab="t1">Track 1</button>
+          <button role="tab" aria-selected="false" data-tab="t2">Track 2</button>
+        </div>
+      </div>
+      <div class="bars" data-chart="cmp" aria-label="Total Score by method"></div>
+      <div class="table-wrap" data-table="cmp"></div>
+      <p class="note">Bold marks the best value in each column. Chronos has the highest Total Score on both tracks. RefAlign keeps a higher facial similarity on Track 1 but loses on visual quality, motion smoothness and naturalness; Chronos leads on text alignment, aesthetics, motion smoothness and naturalness.</p>
+    </div>
+
+    <!-- Qualitative -->
+    <div class="block" data-tabs="qual">
+      <div class="block-head">
+        <h3 class="h-block">Qualitative comparison</h3>
+        <div class="seg" role="tablist" aria-label="Track">
+          <button role="tab" aria-selected="true" data-tab="t1">Track 1</button>
+          <button role="tab" aria-selected="false" data-tab="t2">Track 2</button>
+        </div>
+      </div>
+      <figure class="fig fig-qual" data-panel="t1">
+        <button class="zoom" type="button" aria-label="Enlarge figure">
+          <img src="assets/img/cmp_track1.webp" width="1838" height="1722" loading="lazy" alt="Track 1 comparison: a woman in a Roman bathhouse placing a golf ball, then raising her head to smile. Rows show Stand-In, RefAlign, Phantom, IPT2V and Chronos (ours).">
+        </button>
+        <figcaption>Stand-In and IPT2V perform the action but lose the identity; RefAlign and Phantom keep the face but miss the prompted action of placing the golf ball. Chronos keeps the identity and performs the motion.</figcaption>
+      </figure>
+      <figure class="fig fig-qual" data-panel="t2" hidden>
+        <button class="zoom" type="button" aria-label="Enlarge figure">
+          <img src="assets/img/cmp_track2.webp" width="1779" height="1722" loading="lazy" alt="Track 2 comparison: two people in black athletic wear doing a yoga routine on mats, from seated cross-legged to folding forward to holding a seated bend. Rows show Stand-In, RefAlign, Phantom, IPT2V (not available) and Chronos (ours).">
+        </button>
+        <figcaption>Two references, three timed actions over 5 s. Chronos follows the action sequence while keeping both identities and the requested number of subjects; IPT2V does not support this setting.</figcaption>
+      </figure>
+    </div>
+
+    <!-- Ablation -->
+    <div class="block" data-tabs="abl">
+      <div class="block-head">
+        <h3 class="h-block">Ablation study</h3>
+        <div class="seg" role="tablist" aria-label="Track">
+          <button role="tab" aria-selected="true" data-tab="t1">Track 1</button>
+          <button role="tab" aria-selected="false" data-tab="t2">Track 2</button>
+        </div>
+      </div>
+      <div class="table-wrap" data-table="abl"></div>
+      <ul class="findings">
+        <li><b>SPA</b> strengthens identity preservation, raising the Subject Score on Track 1.</li>
+        <li><b>VFA</b> improves visual quality across generator backbones (Seedance and Wan variants), most visibly in Aesthetic and Natural Score.</li>
+        <li><b>Full Chronos</b>, with metric-guided routing, gets the best Total Score on both tracks.</li>
+      </ul>
+      <p class="note">Ablations use VACE as the baseline and run on the first 100 cases, a representative subset whose trends match the full evaluation set.</p>
+    </div>
+
+    <!-- Ablation cases: replace the .placeholder div with videos or a figure when the files are ready. -->
+    <div class="block" id="ablation-cases">
+      <h3 class="h-block">Ablation cases <span class="muted">· side-by-side</span></h3>
+      <div class="placeholder">
+        <p class="mono">Coming soon</p>
+        <p>Visual comparisons of baseline, + SPA, + SPA &amp; VFA and full Chronos will be added here.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ POSTER ============ -->
+<section class="sec" id="poster">
+  <div class="wrap">
+    <h2 class="kicker"><span class="tc mono">05</span>Poster</h2>
+    <div class="poster">
+      <a class="poster-img" href="assets/chronos_poster.pdf" target="_blank" rel="noopener">
+        <img src="assets/img/poster_preview.webp" width="1200" height="1697" loading="lazy" alt="Chronos poster for ACM Multimedia 2026, summarizing the introduction, method, comparisons and challenge results.">
+      </a>
+      <div class="poster-text">
+        <h3 class="h-display">See it at ACM MM 2026.</h3>
+        <p>The poster covers the motivation, the three anchoring stages, the full comparison and ablation tables, and the challenge leaderboard.</p>
+        <a class="btn btn-solid" href="assets/chronos_poster.pdf" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>
+          <span>Download poster (PDF)</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CITATION ============ -->
+<section class="sec" id="citation">
+  <div class="wrap narrow">
+    <h2 class="kicker"><span class="tc mono">06</span>BibTeX</h2>
+    <div class="bib">
+      <button class="copy" type="button" hidden>Copy</button>
+      <!-- Paste the BibTeX entry between the <code> tags. The page shows a placeholder while it is empty. -->
+      <pre><code id="bibtex"></code></pre>
+      <p class="bib-empty mono">BibTeX will be available here once the arXiv version is out.</p>
+    </div>
+  </div>
+</section>
+
+<section class="sec sec-last" id="ack">
+  <div class="wrap narrow">
+    <h2 class="kicker"><span class="tc mono">07</span>Acknowledgments</h2>
+    <p>This research is supported by the Artificial Intelligence National Science and Technology Major Project 2023ZD0121200, and the National Natural Science Foundation of China under Grant 623B2094.</p>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <p>Chronos · University of Science and Technology of China · ACM Multimedia 2026</p>
+    <a href="#top" class="mono">Back to top ↑</a>
+  </div>
+</footer>
+
+<div class="lightbox" hidden>
+  <button class="lb-close" type="button" aria-label="Close">×</button>
+  <img alt="">
+</div>
+
+<script src="assets/main.js"></script>
+</body>
+</html>
