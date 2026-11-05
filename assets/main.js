@@ -367,65 +367,9 @@
     });
   }
 
-  /* ---------- identity vs motion scatter ---------- */
-  var SC_SIDE = {
-    t1: { "Stand-In": 1, "RefAlign": -1, "Phantom": 1, "IPT2V": -1, "Chronos": 1 },
-    t2: { "Stand-In": 1, "RefAlign": -1, "Phantom": 1, "Chronos": 1 }
-  };
-  var SC_CAP = {
-    t1: "Chronos sits between the face-keeping baselines (RefAlign and Phantom: high identity, less motion) and Stand-In (most motion, lowest identity), and beats IPT2V on both axes.",
-    t2: "On Track 2 Chronos has the highest identity score but the least motion: its gains here come from identity, aesthetics, smoothness and naturalness, not from larger movement."
-  };
-  function renderScatter(key, track) {
-    var el = document.querySelector('[data-scatter="' + key + '"]');
-    if (!el) return;
-    var rows = DATA[key][track];
-    var W = 400, H = 272, L = 40, R = 14, T = 24, B = 40, XM = 0.9, YM = 0.6;
-    var pw = W - L - R, ph = H - T - B;
-    function x(v) { return L + v / XM * pw; }
-    function y(v) { return T + ph - v / YM * ph; }
-    var g = "";
-    [0, 0.2, 0.4, 0.6, 0.8].forEach(function (v) {
-      g += '<line class="sc-grid" x1="' + x(v) + '" x2="' + x(v) + '" y1="' + T + '" y2="' + (T + ph) + '"/>' +
-        '<text class="sc-axis" x="' + x(v) + '" y="' + (T + ph + 15) + '" text-anchor="middle">' + v.toFixed(1) + "</text>";
-    });
-    [0, 0.2, 0.4, 0.6].forEach(function (v) {
-      g += '<line class="sc-grid" x1="' + L + '" x2="' + (L + pw) + '" y1="' + y(v) + '" y2="' + y(v) + '"/>' +
-        '<text class="sc-axis" x="' + (L - 7) + '" y="' + (y(v) + 3.5) + '" text-anchor="end">' + v.toFixed(1) + "</text>";
-    });
-    g += '<text class="sc-title" x="' + (L + pw / 2) + '" y="' + (H - 4) + '" text-anchor="middle">Subject Score (identity) →</text>' +
-      '<text class="sc-title" x="' + (L - 7) + '" y="' + (T - 6) + '" text-anchor="start">Motion Amp. ↑</text>';
-    var pts = "", labels = "", hits = "";
-    rows.slice().sort(function (a, b) { return (a[9] ? 1 : 0) - (b[9] ? 1 : 0); }).forEach(function (r) {
-      var name = r[0].replace("-14B", "").replace(" (ours)", "");
-      var cx = x(r[1]), cy = y(r[5]), ours = !!r[9];
-      var side = (SC_SIDE[track] || {})[name] || 1;
-      pts += '<circle class="pt' + (ours ? " ours" : "") + '" cx="' + cx + '" cy="' + cy + '" r="' + (ours ? 7 : 5.5) + '"/>';
-      labels += '<text class="pl' + (ours ? " ours" : "") + '" x="' + (cx + side * (ours ? 11 : 9)) + '" y="' + (cy + 4) + '" text-anchor="' + (side > 0 ? "start" : "end") + '">' + (ours ? "Chronos (ours)" : name) + "</text>";
-      hits += '<circle class="hit" cx="' + cx + '" cy="' + cy + '" r="14" data-tip="<b>' + r[0] + "</b><br>Subject " + fmt(r[1]) + " · Motion Amp. " + fmt(r[5]) + "<br>Total " + fmt(r[8]) + '"/>';
-    });
-    var summary = rows.map(function (r) { return r[0] + ": Subject " + fmt(r[1]) + ", Motion Amp. " + fmt(r[5]); }).join("; ");
-    el.innerHTML = '<p class="bars-title">Identity vs. motion · ' + (track === "t1" ? "Track 1" : "Track 2") + "</p>" +
-      '<svg viewBox="0 0 ' + W + " " + H + '" role="img" aria-label="Scatter of Subject Score against Motion Amplitude. ' + summary + '">' + g + pts + labels + hits + "</svg>" +
-      "<figcaption>" + SC_CAP[track] + '</figcaption><div class="tip" aria-hidden="true"></div>';
-    var stip = el.querySelector(".tip");
-    el.querySelectorAll(".hit").forEach(function (h) {
-      h.addEventListener("mouseenter", function () {
-        stip.innerHTML = h.getAttribute("data-tip");
-        stip.classList.add("show");
-        var er = el.getBoundingClientRect(), hr = h.getBoundingClientRect();
-        var left = hr.right - er.left + 4;
-        if (left + stip.offsetWidth > er.width - 8) left = hr.left - er.left - stip.offsetWidth - 4;
-        stip.style.left = Math.max(8, left) + "px";
-        stip.style.top = (hr.top - er.top + hr.height / 2 - stip.offsetHeight / 2) + "px";
-      });
-      h.addEventListener("mouseleave", function () { stip.classList.remove("show"); });
-    });
-  }
-
   /* ---------- tabs ---------- */
   var onTab = {
-    cmp: function (tr) { renderBars("cmp", tr); renderScatter("cmp", tr); renderTable("cmp", tr); },
+    cmp: function (tr) { renderBars("cmp", tr); renderTable("cmp", tr); },
     abl: function (tr) { renderTable("abl", tr); }
   };
   document.querySelectorAll(".seg").forEach(function (seg) {
@@ -445,7 +389,7 @@
   var METHODS = { chronos: "Chronos (ours)", standin: "Stand-In", refalign: "RefAlign", phantom: "Phantom", ipt2v: "IPT2V" };
   var CASES = [
     {
-      id: "t1_198", tag: "Track 1 · Case 198", title: "A sharp head turn: the identity holds through the motion",
+      id: "t1_198", tag: "Track 1", title: "A sharp head turn: the identity holds through the motion",
       refs: [{ src: "ref_198.webp", alt: "Reference portrait of a young woman with long dark hair" }],
       prompt: "A young South Asian woman is <em>abruptly twisting her neck</em> and darting her piercing gaze <em>sharply to the right</em> with a <em>deep, angry frown</em> creasing her brow as she braces herself for physical impact inside the shadowy, <em>tatami-floored</em> sanctuary of a traditional feudal Japanese dojo, where <em>rusted katanas hang on the dark wood walls</em> and heavy dust motes dance in the slanted light, filmed using a complex, <em>multi-axis camera rig that swings wildly</em> with her erratic motion before smoothly locking focus on her intense, wide-eyed stare to vividly capture the raw adrenaline of the impending fight.",
       note: '<button type="button" class="case-jump" data-seek="1.25">Watch 1.5–2.5 s.</button> Chronos turns from profile to a frontal, frowning stare and still looks like the reference. RefAlign and Phantom keep the face but move less, and Phantom puts a literal camera rig on set. Stand-In and IPT2V move more, but the face drifts from the reference.',
@@ -453,7 +397,7 @@
       methods: ["chronos", "standin", "refalign", "phantom", "ipt2v"]
     },
     {
-      id: "t2_100", tag: "Track 2 · Case 100", title: "Stand, fold arms, hold: the transition actually happens",
+      id: "t2_100", tag: "Track 2", title: "Stand, fold arms, hold: the transition actually happens",
       refs: [{ src: "ref_100.webp", alt: "Reference portrait of a woman with long wavy hair" }],
       prompt: "A woman with long blonde hair stands outdoors in a peaceful garden-like setting <em>beside a tall white column</em>, wearing a <em>light patterned long dress</em>. She leans against the column and poses calmly while surrounded by green trees and bushes in natural daylight.",
       note: '<button type="button" class="case-jump" data-seek="0">Watch c1.</button> Chronos starts with her arms down, folds them during c2 (about 1.5–2 s) and then holds the pose. RefAlign and Phantom have her arms folded from the first frame, so the c1 → c2 transition never happens.',
