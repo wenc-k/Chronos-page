@@ -4,10 +4,10 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Chronos: Sequential Identity-Preserving Video Generation by Temporal Anchoring</title>
-  <meta name="description" content="Chronos is a training-free framework for identity-preserving video generation that unifies single-segment facial identity preservation and multi-segment sequential action generation through temporal anchoring. 1st place in both tracks of the ACM MM 2026 IPVG Challenge.">
+  <meta name="description" content="Chronos is a training-free framework for identity-preserving video generation that unifies single-segment facial identity preservation and multi-segment sequential action generation through temporal anchoring. Tied 1st in Track 1 and 1st in Track 2 of the ACM MM 2026 IPVG Challenge.">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Chronos: Sequential Identity-Preserving Video Generation by Temporal Anchoring">
-  <meta property="og:description" content="Training-free temporal anchoring for identity-preserving video generation. 1st place in Track 1 and Track 2 of the ACM MM 2026 IPVG Challenge.">
+  <meta property="og:description" content="Training-free temporal anchoring for identity-preserving video generation. Tied 1st in Track 1 and 1st in Track 2 of the ACM MM 2026 IPVG Challenge.">
   <meta property="og:url" content="https://wenc-k.github.io/Chronos-page/">
   <meta property="og:image" content="https://wenc-k.github.io/Chronos-page/assets/img/og.jpg">
   <meta name="twitter:card" content="summary_large_image">
@@ -28,10 +28,8 @@
     </a>
     <nav aria-label="Sections">
       <a href="#abstract">Abstract</a>
-      <a href="#showcase">Showcase</a>
       <a href="#method">Method</a>
       <a href="#results">Results</a>
-      <a href="#poster">Poster</a>
       <a href="#citation">BibTeX</a>
     </nav>
   </div>
@@ -42,7 +40,7 @@
 <section class="hero">
   <div class="wrap">
     <p class="eyebrow mono">ACM Multimedia 2026 <span class="sep">/</span> Rio de Janeiro</p>
-    <p class="award"><span class="award-dot" aria-hidden="true"></span>1st place in Track&nbsp;1 &amp; Track&nbsp;2 · ACM MM 2026 Identity-Preserving Video Generation Challenge</p>
+    <p class="award"><span class="award-dot" aria-hidden="true"></span>Tied 1st in Track&nbsp;1 · 1st in Track&nbsp;2 · ACM MM 2026 Identity-Preserving Video Generation Challenge</p>
 
     <h1 class="title">
       <span class="title-word">Chronos</span>
@@ -71,19 +69,14 @@
     <p class="notes mono">* Equal contribution &nbsp;·&nbsp; † Corresponding author</p>
 
     <div class="links">
-      <!-- To enable: put the arXiv URL in href, e.g. href="https://arxiv.org/abs/XXXX.XXXXX" -->
-      <a class="btn" data-pending="Soon" href="">
+      <a class="btn" data-pending="Soon" href="https://arxiv.org/abs/2611.05893">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/><path d="M9 12h6M9 16h6"/></svg>
         <span>arXiv</span>
       </a>
-      <!-- To enable: put the repository URL in href -->
-      <a class="btn" data-pending="Coming soon" href="">
+      <!-- Code is not released yet: the button points back to this page. Put the repository URL in href when it is. -->
+      <a class="btn" href="./">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 8l-4 4 4 4M16 8l4 4-4 4M13.5 5l-3 14"/></svg>
-        <span>Code</span>
-      </a>
-      <a class="btn" href="assets/chronos_poster.pdf" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="1.5"/><path d="M8 7h8M8 11h8M8 15h4"/></svg>
-        <span>Poster</span>
+        <span>Code</span><span class="soon">Coming soon</span>
       </a>
       <a class="btn" href="https://hidream-ai.github.io/ipvg-challenge-2026.github.io" target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 4h8v5a4 4 0 0 1-8 0z"/><path d="M8 6H5a3 3 0 0 0 3 4M16 6h3a3 3 0 0 1-3 4M12 13v4M8.5 20h7"/></svg>
@@ -98,7 +91,7 @@
     <!-- Temporal anchoring explorer -->
     <div class="explorer" id="explorer">
       <div class="ex-head">
-        <p class="ex-label mono">Temporal anchoring, one clip at a time</p>
+        <p class="ex-label mono">Generated results of Chronos</p>
         <div class="ex-tabs" role="tablist" aria-label="Examples"></div>
       </div>
       <div class="ex-body">
@@ -108,7 +101,10 @@
         </figure>
         <div class="ex-main">
           <p class="ex-prompt"></p>
-          <div class="ex-frames"></div>
+          <div class="ex-stage">
+            <video class="ex-video" muted loop playsinline preload="auto"></video>
+            <button class="ex-play" type="button" aria-label="Pause video"></button>
+          </div>
           <div class="ex-track" role="slider" tabindex="0" aria-label="Playhead, seconds" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0">
             <div class="ex-segs"></div>
             <div class="ex-head-line"><span class="ex-time mono">0.0 s</span></div>
@@ -124,61 +120,20 @@
 
 <main>
 
-<!-- ============ TEASER ============ -->
-<section class="sec" id="teaser">
-  <div class="wrap">
-    <figure class="fig">
-      <button class="zoom" type="button" aria-label="Enlarge figure">
-        <img src="assets/img/teaser.webp" width="2400" height="1208" alt="Reference images and generated frames from Chronos. Top: a woman spray-painting graffiti in a bookshop (Track 1). Middle: an elderly couple reacting to a laptop across three timed actions. Bottom: a black-and-white cat sitting, licking its paw, then looking around, next to a gray cat (Track 2).">
-      </button>
-      <figcaption>
-        <b>Generated results of Chronos.</b> Given reference images, a raw prompt and optional temporal captions, Chronos generates text-aligned, high-quality videos with high identity fidelity, for a single face (Track 1) and for multiple subjects through sequential actions (Track 2). Red text marks key elements of the long instructions.
-      </figcaption>
-    </figure>
-  </div>
-</section>
-
 <!-- ============ ABSTRACT ============ -->
 <section class="sec" id="abstract">
-  <div class="wrap narrow">
+  <div class="wrap">
     <h2 class="kicker"><span class="tc mono">01</span>Abstract</h2>
     <p class="lead">Holding on to <em>who</em> is in the video gets harder the more the video has to <em>move</em>. Chronos treats identity preservation as a temporal problem and places an anchor on every action segment.</p>
     <p>Identity-preserving video generation aims to synthesize high-quality and visually realistic videos from textual and visual conditions while faithfully maintaining the subject's identity across diverse motions. Prior methods have extensively introduced reference-guided control signals and identity-aware conditioning to improve facial alignment from reference images. However, improving static identity alignment alone creates a fundamental tension between identity fidelity and temporal controllability, which frequently causes identity drift or motion suppression under large pose variations and multi-segment sequential actions.</p>
-    <p>To address this, we propose <b>Chronos</b>, a framework that unifies single-segment facial identity preservation and multi-segment sequential action generation under a common temporal formulation. Specifically, Chronos integrates <b>Semantic Prompt Anchoring</b> to adaptively refine the user prompt, <b>Visual Frame Anchoring</b> to transform conditions into visually grounded keyframe anchors for visual guidance, and <b>Metric-Guided Candidate Routing</b> to select the highest-quality videos from heterogeneous generators via multi-dimensional evaluation. Extensive evaluations demonstrate the superiority of our approach, which <b>achieved first place in both Track 1 and Track 2 of the ACM MM 2026 Identity-Preserving Video Generation Challenge</b>, demonstrating its effectiveness across both facial identity preservation and sequential action generation settings.</p>
-  </div>
-</section>
-
-<!-- ============ SHOWCASE ============ -->
-<section class="sec" id="showcase">
-  <div class="wrap">
-    <h2 class="kicker"><span class="tc mono">02</span>Showcase</h2>
-    <div class="block-head">
-      <p class="sub">Videos generated by Chronos on the challenge test sets. Each clip is about 5 seconds.</p>
-      <div class="seg" role="tablist" aria-label="Track" data-tabs-for="gallery">
-        <button role="tab" aria-selected="true" data-tab="t1">Track 1 · Facial ID</button>
-        <button role="tab" aria-selected="false" data-tab="t2">Track 2 · Sequential actions</button>
-      </div>
-    </div>
-    <!-- Each .vid: data-src = video file, data-poster = first frame. Add a <p class="vid-cap"> to show the prompt. -->
-    <div class="gallery" data-panel="t1">
-      <figure class="vid" data-src="assets/videos/t1_19.mp4" data-poster="assets/videos/t1_19.webp"><figcaption class="mono">Track 1 · #19</figcaption></figure>
-      <figure class="vid" data-src="assets/videos/t1_194.mp4" data-poster="assets/videos/t1_194.webp"><figcaption class="mono">Track 1 · #194</figcaption></figure>
-      <figure class="vid" data-src="assets/videos/t1_3.mp4" data-poster="assets/videos/t1_3.webp"><figcaption class="mono">Track 1 · #3</figcaption></figure>
-      <figure class="vid" data-src="assets/videos/t1_70.mp4" data-poster="assets/videos/t1_70.webp"><figcaption class="mono">Track 1 · #70</figcaption></figure>
-    </div>
-    <div class="gallery" data-panel="t2" hidden>
-      <figure class="vid" data-src="assets/videos/t2_160.mp4" data-poster="assets/videos/t2_160.webp"><figcaption class="mono">Track 2 · #160</figcaption></figure>
-      <figure class="vid" data-src="assets/videos/t2_183.mp4" data-poster="assets/videos/t2_183.webp"><figcaption class="mono">Track 2 · #183</figcaption></figure>
-      <figure class="vid" data-src="assets/videos/t2_42.mp4" data-poster="assets/videos/t2_42.webp"><figcaption class="mono">Track 2 · #42</figcaption></figure>
-      <figure class="vid" data-src="assets/videos/t2_45.mp4" data-poster="assets/videos/t2_45.webp"><figcaption class="mono">Track 2 · #45</figcaption></figure>
-    </div>
+    <p>To address this, we propose <b>Chronos</b>, a framework that unifies single-segment facial identity preservation and multi-segment sequential action generation under a common temporal formulation. Specifically, Chronos integrates <b>Semantic Prompt Anchoring</b> to adaptively refine the user prompt, <b>Visual Frame Anchoring</b> to transform conditions into visually grounded keyframe anchors for visual guidance, and <b>Metric-Guided Candidate Routing</b> to select the highest-quality videos from heterogeneous generators via multi-dimensional evaluation. Extensive evaluations demonstrate the superiority of our approach, which <b>achieved tied first place in Track 1 and first place in Track 2 of the ACM MM 2026 Identity-Preserving Video Generation Challenge</b>, demonstrating its effectiveness across both facial identity preservation and sequential action generation settings.</p>
   </div>
 </section>
 
 <!-- ============ METHOD ============ -->
 <section class="sec" id="method">
   <div class="wrap">
-    <h2 class="kicker"><span class="tc mono">03</span>Method</h2>
+    <h2 class="kicker"><span class="tc mono">02</span>Method</h2>
     <div class="split">
       <h3 class="h-display">One temporal formulation for both tracks.</h3>
       <div>
@@ -244,13 +199,13 @@
 <!-- ============ RESULTS ============ -->
 <section class="sec" id="results">
   <div class="wrap">
-    <h2 class="kicker"><span class="tc mono">04</span>Results</h2>
+    <h2 class="kicker"><span class="tc mono">03</span>Results</h2>
 
     <div class="kpis">
       <div class="kpi">
         <p class="kpi-k mono">Track 1 · Challenge</p>
-        <p class="kpi-v">1st</p>
-        <p class="kpi-d">Facial identity preservation, tied for first (final score 2.5)</p>
+        <p class="kpi-v">Tied 1st</p>
+        <p class="kpi-d">Facial identity preservation (final score 2.5)</p>
       </div>
       <div class="kpi">
         <p class="kpi-k mono">Track 2 · Challenge</p>
@@ -313,26 +268,24 @@
     </div>
 
     <!-- Qualitative -->
-    <div class="block" data-tabs="qual">
+    <div class="block">
       <div class="block-head">
         <h3 class="h-block">Qualitative comparison</h3>
-        <div class="seg" role="tablist" aria-label="Track">
-          <button role="tab" aria-selected="true" data-tab="t1">Track 1</button>
-          <button role="tab" aria-selected="false" data-tab="t2">Track 2</button>
-        </div>
       </div>
-      <figure class="fig fig-qual" data-panel="t1">
+      <div class="qual-grid">
+      <figure class="fig fig-qual">
         <button class="zoom" type="button" aria-label="Enlarge figure">
           <img src="assets/img/cmp_track1.webp" width="1838" height="1722" loading="lazy" alt="Track 1 comparison: a woman in a Roman bathhouse placing a golf ball, then raising her head to smile. Rows show Stand-In, RefAlign, Phantom, IPT2V and Chronos (ours).">
         </button>
-        <figcaption>Stand-In and IPT2V perform the action but lose the identity; RefAlign and Phantom keep the face but miss the prompted action of placing the golf ball. Chronos keeps the identity and performs the motion.</figcaption>
+        <figcaption><b>Track 1.</b> Stand-In and IPT2V perform the action but lose the identity; RefAlign and Phantom keep the face but miss the prompted action of placing the golf ball. Chronos keeps the identity and performs the motion.</figcaption>
       </figure>
-      <figure class="fig fig-qual" data-panel="t2" hidden>
+      <figure class="fig fig-qual">
         <button class="zoom" type="button" aria-label="Enlarge figure">
           <img src="assets/img/cmp_track2.webp" width="1779" height="1722" loading="lazy" alt="Track 2 comparison: two people in black athletic wear doing a yoga routine on mats, from seated cross-legged to folding forward to holding a seated bend. Rows show Stand-In, RefAlign, Phantom, IPT2V (not available) and Chronos (ours).">
         </button>
-        <figcaption>Two references, three timed actions over 5 s. Chronos follows the action sequence while keeping both identities and the requested number of subjects; IPT2V does not support this setting.</figcaption>
+        <figcaption><b>Track 2.</b> Two references, three timed actions over 5 s. Chronos follows the action sequence while keeping both identities and the requested number of subjects; IPT2V does not support this setting.</figcaption>
       </figure>
+      </div>
     </div>
 
     <!-- Ablation -->
@@ -364,43 +317,24 @@
   </div>
 </section>
 
-<!-- ============ POSTER ============ -->
-<section class="sec" id="poster">
-  <div class="wrap">
-    <h2 class="kicker"><span class="tc mono">05</span>Poster</h2>
-    <div class="poster">
-      <a class="poster-img" href="assets/chronos_poster.pdf" target="_blank" rel="noopener">
-        <img src="assets/img/poster_preview.webp" width="1200" height="1697" loading="lazy" alt="Chronos poster for ACM Multimedia 2026, summarizing the introduction, method, comparisons and challenge results.">
-      </a>
-      <div class="poster-text">
-        <h3 class="h-display">See it at ACM MM 2026.</h3>
-        <p>The poster covers the motivation, the three anchoring stages, the full comparison and ablation tables, and the challenge leaderboard.</p>
-        <a class="btn btn-solid" href="assets/chronos_poster.pdf" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>
-          <span>Download poster (PDF)</span>
-        </a>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- ============ CITATION ============ -->
-<section class="sec" id="citation">
-  <div class="wrap narrow">
-    <h2 class="kicker"><span class="tc mono">06</span>BibTeX</h2>
+<section class="sec sec-last" id="citation">
+  <div class="wrap">
+    <h2 class="kicker"><span class="tc mono">04</span>BibTeX</h2>
     <div class="bib">
       <button class="copy" type="button" hidden>Copy</button>
       <!-- Paste the BibTeX entry between the <code> tags. The page shows a placeholder while it is empty. -->
-      <pre><code id="bibtex"></code></pre>
+      <pre><code id="bibtex">@misc{huang2026chronossequentialidentitypreservingvideo,
+  title={Chronos: Sequential Identity-Preserving Video Generation by Temporal Anchoring},
+  author={Mengqi Huang and Wenchuan Wang and Zhendong Mao and Yijing Tu and Zhike Liu and Luoni Wang and Ning Tong and Xiaoxiao Sheng and Tianyu Huang and Xuecheng Qi and Yongdong Zhang},
+  year={2026},
+  eprint={2611.05893},
+  archivePrefix={arXiv},
+  primaryClass={cs.CV},
+  url={https://arxiv.org/abs/2611.05893},
+}</code></pre>
       <p class="bib-empty mono">BibTeX will be available here once the arXiv version is out.</p>
     </div>
-  </div>
-</section>
-
-<section class="sec sec-last" id="ack">
-  <div class="wrap narrow">
-    <h2 class="kicker"><span class="tc mono">07</span>Acknowledgments</h2>
-    <p>This research is supported by the Artificial Intelligence National Science and Technology Major Project 2023ZD0121200, and the National Natural Science Foundation of China under Grant 623B2094.</p>
   </div>
 </section>
 
