@@ -9,7 +9,6 @@ Static site, no build step: `index.html` + `assets/`. Fonts are self-hosted in `
 | What | Where in `index.html` | How |
 |---|---|---|
 | arXiv link | the `<a class="btn" data-pending="Soon" href="">` button | put the URL in `href`; the "Soon" tag disappears automatically |
-| Code link | the Code button (links to https://github.com/wenc-k/Chronos with a "Coming soon" tag) | delete the `<span class="soon">` once the code is released |
 | BibTeX | `<code id="bibtex"></code>` in the BibTeX section | paste the entry between the tags; a Copy button appears automatically |
 | Hero videos | `EXAMPLES` in `assets/main.js` | each example's `video` names `assets/videos/<name>.mp4` (with a `<name>.webp` first frame as the poster); `segs` sets the timeline segments in seconds on a 5 s axis |
 | Comparison cases | `CASES` in `assets/main.js` | each case lists its methods; clips live in `assets/videos/cmp/<case id>_<method>.mp4` with a `.webp` poster. The Chronos clip is the master the others sync to. `note` is the "what to watch" text; a `<button class="case-jump" data-seek="1.5">` inside it jumps the case to that second |
