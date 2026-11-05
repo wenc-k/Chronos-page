@@ -453,18 +453,6 @@
       methods: ["chronos", "standin", "refalign", "phantom", "ipt2v"]
     },
     {
-      id: "t2_045", tag: "Track 2 · Case 045", title: "Lift, taste, stir: three actions in order",
-      refs: [{ src: "ref_045.webp", alt: "Reference portrait of a woman in a dark blazer" }],
-      prompt: "A warm, cinematic medium shot shows a cheerful woman <em>cooking at the stove in a cozy sunlit kitchen</em>. She tends a steaming pot with calm, practiced movements, adding seasonings from the counter, tasting the dish, and continuing to stir as golden morning light and soft camera drift enhance the inviting domestic atmosphere.",
-      note: '<button type="button" class="case-jump" data-seek="0">Follow the captions.</button> Chronos lifts the spoon (about 1.5 s), tastes (about 2.5–3.5 s) and is stirring the pot again by 4 s. Stand-In stays in a close-up tasting loop and only dips the ladle back at the very end; RefAlign tastes late (about 2.5–4.5 s) and never stirs; Phantom fills half the frame with a stove fire the prompt never asks for.',
-      segs: [
-        { t0: 0, t1: 1.8, label: "c1", cap: "A woman <em>lifts a spoonful</em> from the pot." },
-        { t0: 1.8, t1: 3.1, label: "c2", cap: "She <em>tastes the spoonful</em>." },
-        { t0: 3.1, t1: 5, label: "c3", cap: "She <em>resumes stirring</em> the pot with a satisfied smile." }
-      ],
-      methods: ["chronos", "standin", "refalign", "phantom", null]
-    },
-    {
       id: "t2_100", tag: "Track 2 · Case 100", title: "Stand, fold arms, hold: the transition actually happens",
       refs: [{ src: "ref_100.webp", alt: "Reference portrait of a woman with long wavy hair" }],
       prompt: "A woman with long blonde hair stands outdoors in a peaceful garden-like setting <em>beside a tall white column</em>, wearing a <em>light patterned long dress</em>. She leans against the column and poses calmly while surrounded by green trees and bushes in natural daylight.",
