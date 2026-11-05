@@ -94,37 +94,31 @@
     <!-- Temporal anchoring explorer -->
     <div class="explorer" id="explorer">
       <div class="ex-head">
-        <p class="ex-label mono">Chronos results · scrub through the action segments</p>
+        <p class="ex-label mono">Chronos results · click a side clip to switch</p>
         <div class="ex-tabs" role="group" aria-label="Examples"></div>
       </div>
-      <div class="ex-body">
-        <div class="ex-main">
-          <div class="ex-stage">
-            <video class="ex-video" muted loop playsinline preload="auto"></video>
-            <button class="ex-play" type="button" aria-label="Pause video"></button>
-          </div>
-          <div class="ex-track" role="slider" tabindex="0" aria-label="Playhead" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0">
-            <div class="ex-segs"></div>
-            <div class="ex-head-line"><span class="ex-time mono">0.0 s</span></div>
-            <div class="ex-ticks mono"></div>
-          </div>
-        </div>
-        <aside class="ex-rail">
-          <figure class="ex-refs">
-            <figcaption class="ex-k mono">Reference</figcaption>
-            <div class="ex-ref-imgs"></div>
-          </figure>
-          <div class="ex-capbox">
-            <p class="ex-k mono">Input captions</p>
-            <ol class="ex-caps"></ol>
-          </div>
-          <div class="ex-promptbox">
-            <p class="ex-k mono">Prompt</p>
-            <p class="ex-prompt"></p>
-          </div>
-        </aside>
-        <p class="ex-meta mono"></p>
+      <!-- Slides are rendered from EXAMPLES in assets/main.js: the active clip sits in the middle, the others blurred at the sides. -->
+      <div class="ex-carousel"><div class="ex-slides"></div></div>
+      <div class="ex-track" role="slider" tabindex="0" aria-label="Playhead" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0">
+        <div class="ex-segs"></div>
+        <div class="ex-head-line"><span class="ex-time mono">0.0 s</span></div>
+        <div class="ex-ticks mono"></div>
       </div>
+      <div class="ex-info">
+        <figure class="ex-refs">
+          <figcaption class="ex-k mono">Reference</figcaption>
+          <div class="ex-ref-imgs"></div>
+        </figure>
+        <div class="ex-capbox">
+          <p class="ex-k mono">Input captions</p>
+          <ol class="ex-caps"></ol>
+        </div>
+        <div class="ex-promptbox">
+          <p class="ex-k mono">Prompt</p>
+          <p class="ex-prompt"></p>
+        </div>
+      </div>
+      <p class="ex-meta mono"></p>
     </div>
   </div>
 </section>
@@ -135,12 +129,8 @@
 <section class="sec" id="abstract">
   <div class="wrap">
     <h2 class="kicker"><span class="tc mono">01</span>Abstract</h2>
-    <div class="split abs">
-    <p class="lead">Holding on to <em>who</em> is in the video gets harder the more the video has to <em>move</em>. Chronos treats identity preservation as a temporal problem: it anchors the prompt, anchors each action phase with keyframes, and keeps the best clip from several off-the-shelf generators.</p>
-    <div>
-    <p>Identity-preserving video generation aims to synthesize high-quality and visually realistic videos from textual and visual conditions while faithfully maintaining the subject's identity across diverse motions. Prior methods have extensively introduced reference-guided control signals and identity-aware conditioning to improve facial alignment from reference images. However, improving static identity alignment alone creates a fundamental tension between identity fidelity and temporal controllability, which frequently causes identity drift or motion suppression under large pose variations and multi-segment sequential actions.</p>
-    <p>To address this, we propose <b>Chronos</b>, a framework that unifies single-segment facial identity preservation and multi-segment sequential action generation under a common temporal formulation. Specifically, Chronos integrates <b>Semantic Prompt Anchoring</b> to adaptively refine the user prompt, <b>Visual Frame Anchoring</b> to transform conditions into visually grounded keyframe anchors for visual guidance, and <b>Metric-Guided Candidate Routing</b> to select the highest-quality videos from heterogeneous generators via multi-dimensional evaluation. Extensive evaluations demonstrate the superiority of our approach, which <b>achieved tied first place in Track 1 and first place in Track 2 of the ACM MM 2026 Identity-Preserving Video Generation Challenge</b>, demonstrating its effectiveness across both facial identity preservation and sequential action generation settings.</p>
-    </div>
+    <div class="abs">
+      <p>Identity-preserving video generation aims to synthesize high-quality and visually realistic videos from textual and visual conditions while faithfully maintaining the subject's identity across diverse motions. Prior methods have extensively introduced reference-guided control signals and identity-aware conditioning to improve facial alignment from reference images. However, improving static identity alignment alone creates a fundamental tension between identity fidelity and temporal controllability, which frequently causes identity drift or motion suppression under large pose variations and multi-segment sequential actions. To address this, we propose <b><i>Chronos</i></b>, a framework that unifies single-segment facial identity preservation and multi-segment sequential action generation under a common temporal formulation. Specifically, <i>Chronos</i> integrates <b>Semantic Prompt Anchoring</b> to adaptively refine the user prompt, <b>Visual Frame Anchoring</b> to transform conditions into visually grounded keyframe anchors for visual guidance, and <b>Metric-Guided Candidate Routing</b> to select the highest-quality videos from heterogeneous generators via multi-dimensional evaluation. Extensive evaluations demonstrate the superiority of our approach, which <b>achieved tied first place in Track 1 and first place in Track 2 of the ACM MM 2026 Identity-Preserving Video Generation Challenge</b>, demonstrating its effectiveness across both facial identity preservation and sequential action generation settings.</p>
     </div>
   </div>
 </section>
@@ -292,8 +282,8 @@
         <figure class="scatter" data-scatter="cmp"></figure>
       </div>
       <div class="table-wrap" data-table="cmp"></div>
-      <p class="note" data-panel="t1">Bold marks the best value in each column. RefAlign and Phantom keep a higher Subject Score (0.80 and 0.72 vs. 0.68) but move less (Motion Amp. 0.29 and 0.21 vs. 0.43); Stand-In moves the most (0.46) but loses the face (Subject 0.24). Chronos balances the two and leads on GMEScore, Aesthetic, Smoothness, Natural and Total.</p>
-      <p class="note" data-panel="t2" hidden>Bold marks the best value in each column. Chronos has the best Subject (0.440), Aesthetic, Smoothness, Natural and Total scores. Stand-In leads on text alignment and motion amplitude but has the lowest Subject Score (0.184); Chronos has the lowest Motion Amplitude and the lowest GMEScore (0.691) on this track.</p>
+      <p class="note" data-panel="t1">Bold marks the best and italics the second-best value in each column. RefAlign and Phantom keep a higher Subject Score (0.80 and 0.72 vs. 0.68) but move less (Motion Amp. 0.29 and 0.21 vs. 0.43); Stand-In moves the most (0.46) but loses the face (Subject 0.24). Chronos balances the two and leads on GMEScore, Aesthetic, Smoothness, Natural and Total.</p>
+      <p class="note" data-panel="t2" hidden>Bold marks the best and italics the second-best value in each column. Chronos has the best Subject (0.440), Aesthetic, Smoothness, Natural and Total scores. Stand-In leads on text alignment and motion amplitude but has the lowest Subject Score (0.184); Chronos has the lowest Motion Amplitude and the lowest GMEScore (0.691) on this track.</p>
     </div>
 
     <!-- Ablation -->
@@ -311,7 +301,7 @@
         <li><b>VFA</b> keyframe anchors with an image-to-video generator lift Track 1 Aesthetic (0.50 → 0.58–0.60) and Motion Amp. (0.18 → 0.37–0.50) at some cost in Subject. On Track 2, SPA and VFA together raise Subject from 0.458 to 0.534–0.591.</li>
         <li><b>Routing</b> adds +0.019 (Track 1) and +0.011 (Track 2) Total Score over the best single generator, so full Chronos has the best Total on both tracks.</li>
       </ul>
-      <p class="note">Ablations use VACE as the baseline and run on the first 100 cases, a representative subset whose trends match the full evaluation set, so absolute numbers differ from the comparison table.</p>
+      <p class="note">Bold marks the best and italics the second-best value in each column. Ablations use VACE as the baseline and run on the first 100 cases, a representative subset whose trends match the full evaluation set, so absolute numbers differ from the comparison table.</p>
     </div>
   </div>
 </section>
