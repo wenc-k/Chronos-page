@@ -12,9 +12,8 @@
   <meta property="og:image" content="https://wenc-k.github.io/Chronos-page/assets/img/og.jpg">
   <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="preload" href="assets/fonts/plex-sans-var.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/space-grotesk-var.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
@@ -29,6 +28,7 @@
     <nav aria-label="Sections">
       <a href="#abstract">Abstract</a>
       <a href="#method">Method</a>
+      <a href="#comparison">Comparison</a>
       <a href="#results">Results</a>
       <a href="#citation">BibTeX</a>
     </nav>
@@ -39,13 +39,16 @@
 <!-- ============ HERO ============ -->
 <section class="hero">
   <div class="wrap">
+    <div class="hero-top">
     <p class="eyebrow mono">ACM Multimedia 2026 <span class="sep">/</span> Rio de Janeiro</p>
     <p class="award"><span class="award-dot" aria-hidden="true"></span>Tied 1st in Track&nbsp;1 · 1st in Track&nbsp;2 · ACM MM 2026 Identity-Preserving Video Generation Challenge</p>
+    </div>
 
     <h1 class="title">
       <span class="title-word">Chronos</span>
       <span class="title-sub">Sequential Identity-Preserving Video Generation by Temporal Anchoring</span>
     </h1>
+    <p class="tagline">Training-free on off-the-shelf generators: identity cues in the prompt, identity-consistent keyframes for the action phases, best of several clips.</p>
 
     <p class="authors">
       <span>Mengqi Huang<sup>1*</sup></span>
@@ -91,28 +94,36 @@
     <!-- Temporal anchoring explorer -->
     <div class="explorer" id="explorer">
       <div class="ex-head">
-        <p class="ex-label mono">Generated results of Chronos</p>
-        <div class="ex-tabs" role="tablist" aria-label="Examples"></div>
+        <p class="ex-label mono">Chronos results · scrub through the action segments</p>
+        <div class="ex-tabs" role="group" aria-label="Examples"></div>
       </div>
       <div class="ex-body">
-        <figure class="ex-refs">
-          <figcaption class="mono">Reference</figcaption>
-          <div class="ex-ref-imgs"></div>
-        </figure>
         <div class="ex-main">
-          <p class="ex-prompt"></p>
           <div class="ex-stage">
             <video class="ex-video" muted loop playsinline preload="auto"></video>
             <button class="ex-play" type="button" aria-label="Pause video"></button>
           </div>
-          <div class="ex-track" role="slider" tabindex="0" aria-label="Playhead, seconds" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0">
+          <div class="ex-track" role="slider" tabindex="0" aria-label="Playhead" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0">
             <div class="ex-segs"></div>
             <div class="ex-head-line"><span class="ex-time mono">0.0 s</span></div>
             <div class="ex-ticks mono"></div>
           </div>
-          <ol class="ex-caps"></ol>
-          <p class="ex-meta mono"></p>
         </div>
+        <aside class="ex-rail">
+          <figure class="ex-refs">
+            <figcaption class="ex-k mono">Reference</figcaption>
+            <div class="ex-ref-imgs"></div>
+          </figure>
+          <div class="ex-capbox">
+            <p class="ex-k mono">Input captions</p>
+            <ol class="ex-caps"></ol>
+          </div>
+          <div class="ex-promptbox">
+            <p class="ex-k mono">Prompt</p>
+            <p class="ex-prompt"></p>
+          </div>
+        </aside>
+        <p class="ex-meta mono"></p>
       </div>
     </div>
   </div>
@@ -124,9 +135,13 @@
 <section class="sec" id="abstract">
   <div class="wrap">
     <h2 class="kicker"><span class="tc mono">01</span>Abstract</h2>
-    <p class="lead">Holding on to <em>who</em> is in the video gets harder the more the video has to <em>move</em>. Chronos treats identity preservation as a temporal problem and places an anchor on every action segment.</p>
+    <div class="split abs">
+    <p class="lead">Holding on to <em>who</em> is in the video gets harder the more the video has to <em>move</em>. Chronos treats identity preservation as a temporal problem: it anchors the prompt, anchors each action phase with keyframes, and keeps the best clip from several off-the-shelf generators.</p>
+    <div>
     <p>Identity-preserving video generation aims to synthesize high-quality and visually realistic videos from textual and visual conditions while faithfully maintaining the subject's identity across diverse motions. Prior methods have extensively introduced reference-guided control signals and identity-aware conditioning to improve facial alignment from reference images. However, improving static identity alignment alone creates a fundamental tension between identity fidelity and temporal controllability, which frequently causes identity drift or motion suppression under large pose variations and multi-segment sequential actions.</p>
     <p>To address this, we propose <b>Chronos</b>, a framework that unifies single-segment facial identity preservation and multi-segment sequential action generation under a common temporal formulation. Specifically, Chronos integrates <b>Semantic Prompt Anchoring</b> to adaptively refine the user prompt, <b>Visual Frame Anchoring</b> to transform conditions into visually grounded keyframe anchors for visual guidance, and <b>Metric-Guided Candidate Routing</b> to select the highest-quality videos from heterogeneous generators via multi-dimensional evaluation. Extensive evaluations demonstrate the superiority of our approach, which <b>achieved tied first place in Track 1 and first place in Track 2 of the ACM MM 2026 Identity-Preserving Video Generation Challenge</b>, demonstrating its effectiveness across both facial identity preservation and sequential action generation settings.</p>
+    </div>
+    </div>
   </div>
 </section>
 
@@ -137,19 +152,19 @@
     <div class="split">
       <h3 class="h-display">One temporal formulation for both tracks.</h3>
       <div>
-        <p>Given reference images <i>𝓘</i>, a raw prompt <i>P</i> and optional temporal captions <i>𝓒</i> = {<i>c</i><sub><i>t</i></sub>}<sub><i>t</i>=1</sub><sup><i>T</i></sup>, Chronos generates a video that keeps the target identity while following the scene, the actions and their order.</p>
+        <p>Given reference images <span class="m">ℐ</span>, a raw prompt <span class="m">P</span> and optional temporal captions <span class="m">𝒞</span> = {<span class="m">c</span><sub><span class="m">t</span></sub>}<sub><span class="m">t</span>=1</sub><sup><span class="m">T</span></sup>, Chronos generates a video that keeps the target identity while following the scene, the actions and their order.</p>
         <div class="tt">
           <div class="tt-row"><span class="tt-k mono">T = 1</span><span class="tt-bar"><i style="width:100%"></i></span><span class="tt-v">Track 1 · facial identity preservation, a single segment</span></div>
-          <div class="tt-row"><span class="tt-k mono">T &gt; 1</span><span class="tt-bar"><i style="width:38%"></i><i style="width:26%"></i><i style="width:36%"></i></span><span class="tt-v">Track 2 · sequential actions, one anchor per segment</span></div>
+          <div class="tt-row"><span class="tt-k mono">T &gt; 1</span><span class="tt-bar"><i style="width:38%"></i><i style="width:26%"></i><i style="width:36%"></i></span><span class="tt-v">Track 2 · sequential actions, keyframe anchors per action phase</span></div>
         </div>
       </div>
     </div>
 
     <figure class="fig">
-      <button class="zoom" type="button" aria-label="Enlarge figure">
+      <button class="zoom" type="button" aria-label="Enlarge figure: Chronos pipeline" aria-describedby="fig-pipeline">
         <img src="assets/img/pipeline.webp" width="2800" height="1164" loading="lazy" alt="Chronos pipeline. Inputs (reference images, raw prompt, temporal captions) flow into Semantic Prompt Anchoring (identity cue extraction and risk-aware prompt adaptation with levels light, medium, high), then Visual Frame Anchoring (cascaded keyframe anchors A1 to AT), then Metric-Guided Candidate Routing (several video generators, an automatic evaluator, weighted aggregation and exception-aware review).">
       </button>
-      <figcaption><b>Overview of Chronos.</b> Semantic Prompt Anchoring refines the prompt with reliable identity cues, Visual Frame Anchoring turns conditions into keyframe anchors, and Metric-Guided Candidate Routing picks the best video from a pool of heterogeneous generators.</figcaption>
+      <figcaption id="fig-pipeline"><b>Overview of Chronos.</b> Semantic Prompt Anchoring refines the prompt with reliable identity cues, Visual Frame Anchoring turns conditions into keyframe anchors, and Metric-Guided Candidate Routing picks the best video from a pool of heterogeneous generators.</figcaption>
     </figure>
 
     <ol class="modules">
@@ -158,8 +173,8 @@
         <h3>Semantic Prompt Anchoring</h3>
         <p>A non-intrusive prompt refinement that strengthens identity constraints while keeping the original scene, style and motion.</p>
         <ul>
-          <li><b>Identity cue extraction.</b> A GPT model reads the reference images and keeps only stable, invariant identity cues <i>H</i>, dropping transient attributes such as clothing and background.</li>
-          <li><b>Risk-aware prompt adaptation.</b> It estimates the identity-drift risk of the prompt as a score <i>s</i> ∈ {1, 2, 3} and adds concise viewpoint and visibility cues to produce <i>P̂</i>.</li>
+          <li><b>Identity cue extraction.</b> A GPT model reads the reference images and keeps only stable, invariant identity cues <span class="m">H</span>, dropping transient attributes such as clothing and background.</li>
+          <li><b>Risk-aware prompt adaptation.</b> It estimates the identity-drift risk of the prompt as a score <span class="m">s</span> ∈ {1, 2, 3} and adds concise viewpoint and visibility cues to produce <span class="m">P̂</span>.</li>
         </ul>
         <div class="risk" aria-label="Risk levels">
           <span class="r r1"><b class="mono">1</b> Light · minimal correction</span>
@@ -170,10 +185,10 @@
       <li class="mod">
         <p class="mod-n mono">Stage 2 · VFA</p>
         <h3>Visual Frame Anchoring</h3>
-        <p>Text alone is ambiguous when the target pose, action or viewpoint departs from the reference. VFA uses an image-to-image operator <i>Φ</i><sub>I2I</sub> to turn <i>𝓘</i>, <i>P̂</i> and an instruction template into visually grounded keyframes.</p>
+        <p>Text alone is ambiguous when the target pose, action or viewpoint departs from the reference. VFA uses an image-to-image operator <span class="m">Φ</span><sub>I2I</sub> to turn <span class="m">ℐ</span>, <span class="m">P̂</span> and an instruction template into visually grounded keyframes.</p>
         <ul>
-          <li><b>Track 1.</b> A single high-fidelity first-frame anchor <i>A</i><sub>1</sub> initializes image-to-video generation.</li>
-          <li><b>Track 2.</b> Anchor <i>A</i><sub>1</sub> comes from the first caption <i>c</i><sub>1</sub>; each later anchor <i>A</i><sub><i>t</i></sub> is generated from <i>c</i><sub><i>t</i></sub> and the previous keyframes, in a cascade.</li>
+          <li><b>Track 1.</b> A single high-fidelity first-frame anchor <span class="m">A</span><sub>1</sub> initializes image-to-video generation.</li>
+          <li><b>Track 2.</b> Anchor <span class="m">A</span><sub>1</sub> comes from the first caption <span class="m">c</span><sub>1</sub>; each later anchor <span class="m">A</span><sub><span class="m">t</span></sub> is generated from <span class="m">c</span><sub><span class="m">t</span></sub> and the previous keyframes, in a cascade.</li>
         </ul>
         <div class="cascade" aria-hidden="true">
           <span>A<sub>1</sub></span><i></i><span>A<sub>2</sub></span><i></i><span>⋯</span><i></i><span>A<sub>T</sub></span>
@@ -182,13 +197,13 @@
       <li class="mod">
         <p class="mod-n mono">Stage 3 · MGCR</p>
         <h3>Metric-Guided Candidate Routing</h3>
-        <p>Generators <i>G</i><sub>1</sub>…<i>G</i><sub><i>K</i></sub> each turn (<i>P̂</i>, <i>𝓐</i>) into a candidate video. An automatic evaluator scores every candidate on text consistency, identity, subject preservation, motion, visual quality and an LLM-based holistic judgment.</p>
+        <p>Generators <span class="m">G</span><sub>1</sub>…<span class="m">G</span><sub><span class="m">K</span></sub> each turn (<span class="m">P̂</span>, <span class="m">𝒜</span>) into a candidate video. An automatic evaluator scores every candidate on text consistency, identity, subject preservation, motion, visual quality and an LLM-based holistic judgment.</p>
         <div class="eq">
-          <p><i>R</i>(<i>V<sub>k</sub></i>) = Σ<sub><i>j</i></sub> <i>λ<sub>j</sub></i> <i>s<sub>j</sub></i>(<i>V<sub>k</sub></i>)</p>
-          <p><i>V</i><sup>*</sup> = arg max<sub><i>V<sub>k</sub></i> ∈ 𝓥</sub> <i>R</i>(<i>V<sub>k</sub></i>)</p>
+          <p><span class="m">R</span>(<span class="m">V</span><sub><span class="m">k</span></sub>) = Σ<sub><span class="m">j</span></sub> <span class="m">λ</span><sub><span class="m">j</span></sub> <span class="m">s</span><sub><span class="m">j</span></sub>(<span class="m">V</span><sub><span class="m">k</span></sub>)</p>
+          <p><span class="m">V</span><sup>*</sup> = arg max<sub><span class="m">V</span><sub><span class="m">k</span></sub> ∈ <span class="m">𝒱</span></sub> <span class="m">R</span>(<span class="m">V</span><sub><span class="m">k</span></sub>)</p>
         </div>
         <ul>
-          <li><b>Exception-aware review.</b> If the winner falls below a threshold <i>τ<sub>j</sub></i> on any critical metric, it goes to human review instead of being accepted on its total score alone.</li>
+          <li><b>Exception-aware review.</b> If the winner falls below a threshold <span class="m">τ</span><sub><span class="m">j</span></sub> on any critical metric, it goes to human review instead of being accepted on its total score alone.</li>
         </ul>
       </li>
     </ol>
@@ -196,37 +211,47 @@
   </div>
 </section>
 
+<!-- ============ COMPARISON ============ -->
+<section class="sec" id="comparison">
+  <div class="wrap">
+    <h2 class="kicker"><span class="tc mono">03</span>Visual comparison</h2>
+    <p class="sec-sub">Same reference and prompt for every method. Clips play at their native frame rate, synced to the Chronos clip on one shared timeline of input captions.</p>
+    <!-- Cases are rendered from CASES in assets/main.js -->
+    <div class="cases" id="cases"></div>
+  </div>
+</section>
+
 <!-- ============ RESULTS ============ -->
 <section class="sec" id="results">
   <div class="wrap">
-    <h2 class="kicker"><span class="tc mono">03</span>Results</h2>
+    <h2 class="kicker"><span class="tc mono">04</span>Results</h2>
 
     <div class="kpis">
       <div class="kpi">
         <p class="kpi-k mono">Track 1 · Challenge</p>
         <p class="kpi-v">Tied 1st</p>
-        <p class="kpi-d">Facial identity preservation (final score 2.5)</p>
+        <p class="kpi-d">Final Score 2.5, tied with MIPL_Video (lower is better)</p>
       </div>
       <div class="kpi">
         <p class="kpi-k mono">Track 2 · Challenge</p>
         <p class="kpi-v">1st</p>
-        <p class="kpi-d">Sequential-action identity preservation (final score 1.25)</p>
+        <p class="kpi-d">Final Score 1.25, ahead of WislabGDUT (1.8125; lower is better)</p>
       </div>
       <div class="kpi">
-        <p class="kpi-k mono">Track 1 · Total Score</p>
+        <p class="kpi-k mono">Track 1 · vs. baselines</p>
         <p class="kpi-v">0.6769</p>
-        <p class="kpi-d">About 9% above the runner-up, RefAlign (0.6214)</p>
+        <p class="kpi-d">Total Score, +8.9% over the best baseline, RefAlign (0.6214)</p>
       </div>
       <div class="kpi">
-        <p class="kpi-k mono">Track 2 · Total Score</p>
+        <p class="kpi-k mono">Track 2 · vs. baselines</p>
         <p class="kpi-v">0.6102</p>
-        <p class="kpi-d">6.6% above the runner-up, Phantom (0.5725)</p>
+        <p class="kpi-d">Total Score, +6.6% over the best baseline, Phantom (0.5725)</p>
       </div>
     </div>
 
     <!-- Leaderboard -->
     <div class="block">
-      <h3 class="h-block">Challenge leaderboard <span class="muted">· top three teams</span></h3>
+      <h3 class="h-block">Challenge leaderboard <span class="muted">· top three teams · Final Score, lower is better</span></h3>
       <div class="lb">
         <div class="table-wrap">
           <table class="tbl">
@@ -257,62 +282,36 @@
     <div class="block" data-tabs="cmp">
       <div class="block-head">
         <h3 class="h-block">Comparison with existing methods</h3>
-        <div class="seg" role="tablist" aria-label="Track">
-          <button role="tab" aria-selected="true" data-tab="t1">Track 1</button>
-          <button role="tab" aria-selected="false" data-tab="t2">Track 2</button>
+        <div class="seg" role="group" aria-label="Track">
+          <button type="button" aria-pressed="true" data-tab="t1">Track 1</button>
+          <button type="button" aria-pressed="false" data-tab="t2">Track 2</button>
         </div>
       </div>
-      <div class="bars" data-chart="cmp" aria-label="Total Score by method"></div>
+      <div class="charts">
+        <div class="bars" data-chart="cmp" aria-label="Total Score by method"></div>
+        <figure class="scatter" data-scatter="cmp"></figure>
+      </div>
       <div class="table-wrap" data-table="cmp"></div>
-      <p class="note">Bold marks the best value in each column. Chronos has the highest Total Score on both tracks. RefAlign keeps a higher facial similarity on Track 1 but loses on visual quality, motion smoothness and naturalness; Chronos leads on text alignment, aesthetics, motion smoothness and naturalness.</p>
-    </div>
-
-    <!-- Qualitative -->
-    <div class="block">
-      <div class="block-head">
-        <h3 class="h-block">Qualitative comparison</h3>
-      </div>
-      <div class="qual-grid">
-      <figure class="fig fig-qual">
-        <button class="zoom" type="button" aria-label="Enlarge figure">
-          <img src="assets/img/cmp_track1.webp" width="1838" height="1722" loading="lazy" alt="Track 1 comparison: a woman in a Roman bathhouse placing a golf ball, then raising her head to smile. Rows show Stand-In, RefAlign, Phantom, IPT2V and Chronos (ours).">
-        </button>
-        <figcaption><b>Track 1.</b> Stand-In and IPT2V perform the action but lose the identity; RefAlign and Phantom keep the face but miss the prompted action of placing the golf ball. Chronos keeps the identity and performs the motion.</figcaption>
-      </figure>
-      <figure class="fig fig-qual">
-        <button class="zoom" type="button" aria-label="Enlarge figure">
-          <img src="assets/img/cmp_track2.webp" width="1779" height="1722" loading="lazy" alt="Track 2 comparison: two people in black athletic wear doing a yoga routine on mats, from seated cross-legged to folding forward to holding a seated bend. Rows show Stand-In, RefAlign, Phantom, IPT2V (not available) and Chronos (ours).">
-        </button>
-        <figcaption><b>Track 2.</b> Two references, three timed actions over 5 s. Chronos follows the action sequence while keeping both identities and the requested number of subjects; IPT2V does not support this setting.</figcaption>
-      </figure>
-      </div>
+      <p class="note" data-panel="t1">Bold marks the best value in each column. RefAlign and Phantom keep a higher Subject Score (0.80 and 0.72 vs. 0.68) but move less (Motion Amp. 0.29 and 0.21 vs. 0.43); Stand-In moves the most (0.46) but loses the face (Subject 0.24). Chronos balances the two and leads on GMEScore, Aesthetic, Smoothness, Natural and Total.</p>
+      <p class="note" data-panel="t2" hidden>Bold marks the best value in each column. Chronos has the best Subject (0.440), Aesthetic, Smoothness, Natural and Total scores. Stand-In leads on text alignment and motion amplitude but has the lowest Subject Score (0.184); Chronos has the lowest Motion Amplitude and the lowest GMEScore (0.691) on this track.</p>
     </div>
 
     <!-- Ablation -->
     <div class="block" data-tabs="abl">
       <div class="block-head">
         <h3 class="h-block">Ablation study</h3>
-        <div class="seg" role="tablist" aria-label="Track">
-          <button role="tab" aria-selected="true" data-tab="t1">Track 1</button>
-          <button role="tab" aria-selected="false" data-tab="t2">Track 2</button>
+        <div class="seg" role="group" aria-label="Track">
+          <button type="button" aria-pressed="true" data-tab="t1">Track 1</button>
+          <button type="button" aria-pressed="false" data-tab="t2">Track 2</button>
         </div>
       </div>
       <div class="table-wrap" data-table="abl"></div>
       <ul class="findings">
-        <li><b>SPA</b> strengthens identity preservation, raising the Subject Score on Track 1.</li>
-        <li><b>VFA</b> improves visual quality across generator backbones (Seedance and Wan variants), most visibly in Aesthetic and Natural Score.</li>
-        <li><b>Full Chronos</b>, with metric-guided routing, gets the best Total Score on both tracks.</li>
+        <li><b>SPA</b> alone gives a small identity gain on Track 1 (Subject 0.751 → 0.756) and raises Natural Score (0.578 → 0.588).</li>
+        <li><b>VFA</b> keyframe anchors with an image-to-video generator lift Track 1 Aesthetic (0.50 → 0.58–0.60) and Motion Amp. (0.18 → 0.37–0.50) at some cost in Subject. On Track 2, SPA and VFA together raise Subject from 0.458 to 0.534–0.591.</li>
+        <li><b>Routing</b> adds +0.019 (Track 1) and +0.011 (Track 2) Total Score over the best single generator, so full Chronos has the best Total on both tracks.</li>
       </ul>
-      <p class="note">Ablations use VACE as the baseline and run on the first 100 cases, a representative subset whose trends match the full evaluation set.</p>
-    </div>
-
-    <!-- Ablation cases: replace the .placeholder div with videos or a figure when the files are ready. -->
-    <div class="block" id="ablation-cases">
-      <h3 class="h-block">Ablation cases <span class="muted">· side-by-side</span></h3>
-      <div class="placeholder">
-        <p class="mono">Coming soon</p>
-        <p>Visual comparisons of baseline, + SPA, + SPA &amp; VFA and full Chronos will be added here.</p>
-      </div>
+      <p class="note">Ablations use VACE as the baseline and run on the first 100 cases, a representative subset whose trends match the full evaluation set, so absolute numbers differ from the comparison table.</p>
     </div>
   </div>
 </section>
@@ -320,7 +319,7 @@
 <!-- ============ CITATION ============ -->
 <section class="sec sec-last" id="citation">
   <div class="wrap">
-    <h2 class="kicker"><span class="tc mono">04</span>BibTeX</h2>
+    <h2 class="kicker"><span class="tc mono">05</span>BibTeX</h2>
     <div class="bib">
       <button class="copy" type="button" hidden>Copy</button>
       <!-- Paste the BibTeX entry between the <code> tags. The page shows a placeholder while it is empty. -->
